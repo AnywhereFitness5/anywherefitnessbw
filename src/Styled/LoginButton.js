@@ -3,7 +3,7 @@ import { MaterialDesignButton } from './MaterialDesignButton';
 
 // Make sure your styled components are capitalized so that React can recognize them as custom components.
 
-export const OrderButton = styled(MaterialDesignButton)`
+export const LoginButton = styled(MaterialDesignButton)`
     margin-top: -16px;
-    width: 200px;
+    width: 300px;
 `;
