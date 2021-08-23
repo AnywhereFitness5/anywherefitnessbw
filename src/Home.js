@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import yogaBanner from './Assets/yogaBanner.jpg';
-import { GlobalStyle } from "./Styled/Global";
+import hiking from './Assets/hiking.jpg';
 import { LoginButton } from './Styled/LoginButton';
 
 export default function Home()
@@ -24,7 +23,7 @@ export default function Home()
 
     return (
         <Wrapper>
-            <Image src={yogaBanner} alt='silhouette photography of woman doing yoga photo' />
+            <Image src={hiking} alt='silhouette photography of woman doing yoga photo' />
             <Link to="/login">
                 <LoginButton>Login to your Account!</LoginButton>
             </Link>
