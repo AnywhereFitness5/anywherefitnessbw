@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from 'react-router-dom';
+import Home from "./Home";
 import { GlobalStyle } from "./Styled/Global";
 import { Container } from './Styled/Container';
 import
@@ -29,7 +30,7 @@ export default function App()
 
             <Switch>
                 <Route exact path="/">
-
+                    <Home />
                 </Route>
 
                 <Route path="/class/schedule">
