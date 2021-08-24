@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Route, Switch, Redirect } from 'react-router-dom';
+import React from "react";
+import { Route, Switch } from 'react-router-dom';
 import Home from "./Home";
 import { GlobalStyle } from "./Styled/Global";
-import { Container } from './Styled/Container';
-import
+import { Container } from "./Styled/Container";
+import Login from "./Login";
+import 
 {
     Nav,
     NavHeader,
@@ -42,7 +43,7 @@ export default function App()
                 </Route>
 
                 <Route path="/login">
-
+                    <Login />
                 </Route>
 
                 <Route path="/register">
