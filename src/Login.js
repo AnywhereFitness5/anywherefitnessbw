@@ -162,10 +162,4 @@ const ForgotPassword = styled.h4`
   cursor: pointer;
 `;
 
-const Image = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-`;
-
 export default Login;

@@ -4,6 +4,7 @@ import Home from "./Home";
 import { GlobalStyle } from "./Styled/Global";
 import { Container } from "./Styled/Container";
 import Login from "./Login";
+import Register from "./Register";
 import 
 {
     Nav,
@@ -47,7 +48,7 @@ export default function App()
                 </Route>
 
                 <Route path="/register">
-
+                    <Register />
                 </Route>
             </Switch>
         </Container>
