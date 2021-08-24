@@ -4,6 +4,7 @@ import { StyledButton } from "./components/Button";
 import Icon from "./components/Icon";
 import Input from "./components/Input";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import background from "./Assets/login-background.jpg";
 
 function Login(props)
 {
@@ -54,12 +55,13 @@ function Login(props)
 };
 
 const Body = styled.body`
+  background-image: url(${background});
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   font-family: "Raleway", sans-serif;
 `;
 
@@ -70,7 +72,7 @@ const MainContainer = styled.div`
   height: 80vh;
   width: 30vw;
   background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
   backdrop-filter: blur(8.5px);
   -webkit-backdrop-filter: blur(8.5px);
   border-radius: 10px;
