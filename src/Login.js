@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import { StyledButton } from "./components/Button";
 import Icon from "./components/Icon";
@@ -12,9 +13,15 @@ function Login(props)
     const InstagramBackground = "linear-gradient(to right, #A12AC4 0%, #ED586C 40%, #F0A853 100%)";
     const TwitterBackground = "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
 
+    const { login } = props;
+
+    const history = useHistory();
+
     const handleLogin = (event) =>
     {
+        event.preventDefault();
         console.log("Login button clicked");
+        login("Amy", "password", history);
     };
 
     return (

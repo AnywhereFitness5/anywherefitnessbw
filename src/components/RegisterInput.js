@@ -1,8 +1,23 @@
 import styled from "styled-components";
 
-export default function RegisterInput({ type, placeholder })
+export default function RegisterInput(
+    {
+        name,
+        value,
+        id,
+        type,
+        placeholder,
+        onChange
+    })
 {
-    return <StyledInput type={type} placeholder={placeholder} />;
+    return <StyledInput
+        name={name}
+        value={value}
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+    />;
 }
 
 const StyledInput = styled.input`

@@ -20,19 +20,22 @@ const registerSchema = yup.object().shape({
         .required('Email is required'),
     user_name: yup
         .string()
-        .trim
+        .trim()
         .required('User name is required')
         .min(3, 'User name must be at least 3 character long')
         .max(50, "User name must be less or equal than 50 characters long"),
     password: yup
         .string()
+        .trim()
         .required("Password is Required")
-        .min(6, "Passwords must be at least 6 characters long")
-        .trim,
+        .min(6, "Passwords must be at least 6 characters long"),
     confirm_password: yup
         .string()
-        .required("Password confirmation is required")
-        .trim,
+        .trim()
+        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+    user_type: yup
+        .string()
+        .oneOf(['client', 'instructor'], 'User type is required'),
     terms: yup
         .boolean()
         .oneOf([true], 'Terms of Services must be accepted')
