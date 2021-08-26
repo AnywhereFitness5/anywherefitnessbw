@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import { StyledButton } from "./components/Button";
 import Icon from "./components/Icon";
 import Input from "./components/Input";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import background from "./Assets/login-background.jpg";
+import axios from 'axios';
 
 function Login(props)
 {
@@ -12,10 +13,29 @@ function Login(props)
     const InstagramBackground = "linear-gradient(to right, #A12AC4 0%, #ED586C 40%, #F0A853 100%)";
     const TwitterBackground = "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
 
+    const loginValues = {
+      username: '',
+      password: ''
+    }
+
+    const [login, setLogin] = useState(loginValues)
+
     const handleLogin = (event) =>
     {
         console.log("Login button clicked");
+        event.preventDefault()
+        axios.post('https://anywhere-fitness5-lambda.herokuapp.com/api/auth/login', login)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
     };
+
+    const handleChanges = e =>{
+      setLogin({...login, [e.target.name]: e.target.value})
+    }
 
     return (
         <Body>
@@ -24,8 +44,20 @@ function Login(props)
                 <WelcomeText>Welcome</WelcomeText>
 
                 <InputContainer>
-                    <Input type="text" placeholder="Username" />
-                    <Input type="password" placeholder="Password" />
+                    <Input 
+                     type="text"
+                     name = 'username'
+                     placeholder="Username" 
+                     value = {login.username}
+                     onChange = {handleChanges}
+                     />
+                    <Input 
+                    type="password" 
+                    name = 'password'
+                    placeholder="Password"
+                    value={login.value} 
+                    onChange = {handleChanges}
+                    />
                 </InputContainer>
 
                 <ButtonContainer>

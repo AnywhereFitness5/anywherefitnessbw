@@ -5,18 +5,47 @@ import { StyledButton } from "./components/Button";
 import RegisterInput from "./components/RegisterInput";
 import run from "./Assets/run.jpg";
 import { RegisterCheckbox } from './components/RegisterCheckbox';
+import axios from 'axios';
+import { useHistory } from "react-router";
 
 const options = ["Client", "Instructor"];
 
-function Register(props)
-{
+function Register(props) {
+
+    const registeredValues = {
+      first_name: '',
+      last_name: '',
+      email: '',
+      username: '',
+      password: '' 
+    }
+    
+    const push = useHistory()
+
+    const [registered, setRegistered] = useState(registeredValues)
+
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const handleRegisterNow = (event) =>
-    {
-        console.log("Login button clicked");
+
+    const handleChanges = e =>{
+      setRegistered({...registered, [e.target.name]: e.target.value})
+    }
+
+    const handleRegisterNow = (event) => {
+        console.log("register button clicked");
+        event.preventDefault()
+        axios.post('https://anywhere-fitness5-lambda.herokuapp.com/api/auth/register', registered)
+        .then((res)=> {
+          console.log(res)
+          push('login')
+          setRegistered(registered)
+        })
+        .catch((err)=>console.log(err))   
     };
+
+
+
 
     const toggling = () => setIsOpen(!isOpen);
 
@@ -33,12 +62,48 @@ function Register(props)
                 <RegisterText>Register</RegisterText>
 
                 <InputContainer>
-                    <RegisterInput type="text" placeholder="First Name" />
-                    <RegisterInput type="text" placeholder="Last Name" />
-                    <RegisterInput type="email" placeholder="Email" />
-                    <RegisterInput type="text" placeholder="Username" />
-                    <RegisterInput type="password" placeholder="Password" />
-                    <RegisterInput type="password" placeholder="Confirm Password" />
+                    <RegisterInput 
+                     type="text"
+                     name = 'first_name'
+                     placeholder="First Name"
+                     value={registered.first_name}
+                     onChange={handleChanges}
+                     />
+                     <RegisterInput 
+                     type="text"
+                     name = 'last_name'
+                     placeholder="Last Name"
+                     value={registered.last_name}
+                     onChange={handleChanges}
+                     />
+                    <RegisterInput 
+                    type="email" 
+                    name = 'email'
+                    placeholder="Email" 
+                    value = {registered.email}
+                    onChange={handleChanges}
+                    />
+                    <RegisterInput 
+                    type="text" 
+                    name='username'
+                    placeholder="Username" 
+                    value={registered.username}
+                    onChange={handleChanges}
+                    />
+                    <RegisterInput 
+                    type="password" 
+                    name='password'
+                    placeholder="Password" 
+                    value={registered.password}
+                    onChange={handleChanges}
+                    />
+                    <RegisterInput 
+                    type="password" 
+                    name='password'
+                    placeholder="Confirm Password" 
+                    value={registered.password}
+                    onChange={handleChanges}
+                    />
 
                     <DropDownContainer>
                         <DropDownHeader onClick={toggling}>
@@ -102,21 +167,21 @@ const MainContainer = styled.div`
                     width: 80vw;
                 height: 90vh;
                 hr {
-                    margin - bottom: 0.3rem;
-    }
+                    margin-bottom: 0.3rem;
+                }
                 h4 {
-                    font - size: small;
-    }
-  }
+                    font-size: small;
+                }
+             }
                 @media only screen and (min-width: 360px) {
                     width: 80vw;
-                height: 90vh;
+                    height: 90vh;
                 h4 {
-                    font - size: small;
-    }
-  }
+                    font-size: small;
+                 }
+            }
                 @media only screen and (min-width: 411px) {
-                    width: 80vw;
+                width: 80vw;
                 height: 90vh;
   }
 
@@ -132,7 +197,7 @@ const MainContainer = styled.div`
                     width: 30vw;
                 height: 80vh;
   }
-                `;
+                `
 
 const RegisterText = styled.h2`
                 margin: 3rem 0 2rem 0;
@@ -213,4 +278,4 @@ const ListItem = styled("li")`
                  }
                 `;
 
-export default Register;;
+export default Register;
