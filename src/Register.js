@@ -6,7 +6,7 @@ import RegisterInput from "./components/RegisterInput";
 import run from "./Assets/run.jpg";
 import { RegisterCheckbox } from './components/RegisterCheckbox';
 import axios from 'axios';
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const options = ["Client", "Instructor"];
 
@@ -20,7 +20,7 @@ function Register(props) {
       password: '' 
     }
     
-    const push = useHistory()
+    const { push } = useHistory()
 
     const [registered, setRegistered] = useState(registeredValues)
 
@@ -32,16 +32,31 @@ function Register(props) {
       setRegistered({...registered, [e.target.name]: e.target.value})
     }
 
+    const postNewUser = newUser =>{
+        axios.post('https://anywhere-fitness5-lambda.herokuapp.com/api/auth/register', newUser)
+        .then((res)=> {
+          console.log(res)
+          setRegistered([res.data, ...registered])
+          push('/login')
+        })
+
+        .catch((err)=>console.log(err.data)) 
+
+        .finally(()=> {
+            setRegistered(registeredValues)
+        })  
+    }
+
     const handleRegisterNow = (event) => {
         console.log("register button clicked");
         event.preventDefault()
-        axios.post('https://anywhere-fitness5-lambda.herokuapp.com/api/auth/register', registered)
-        .then((res)=> {
-          console.log(res)
-          push('login')
-          setRegistered(registered)
-        })
-        .catch((err)=>console.log(err))   
+        const newUser = {
+            first_name: registered.first_name.trim(),
+            last_name: registered.last_name.trim(),
+            username: registered.username.trim(),
+            password: registered.password.trim()
+        }
+        postNewUser(newUser)
     };
 
 
@@ -84,7 +99,7 @@ function Register(props) {
                     onChange={handleChanges}
                     />
                     <RegisterInput 
-                    type="text" 
+                    type="username" 
                     name='username'
                     placeholder="Username" 
                     value={registered.username}
