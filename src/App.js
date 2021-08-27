@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch, Redirect } from 'react-router-dom';
 import * as yup from 'yup';
 import Home from "./Home";
@@ -47,6 +47,7 @@ export default function App()
     const [userId, setUserId] = useState(null);
     const [registerValues, setRegisterValues] = useState(initialRegisterValues);
     const [registerErrors, setRegisterErrors] = useState(initialRegisterErrors);
+    const [registerDisabled, setRegisterDisabled] = useState(true);
 
     const login = function (username, password, history)
     {
@@ -94,6 +95,18 @@ export default function App()
         validate(name, value);
         setRegisterValues({ ...registerValues, [name]: value });
     };
+
+    const registerSubmit = (history) =>
+    {
+        // Navigate to "/login"
+        history.push("/login");
+    };
+
+
+    useEffect(() =>
+    {
+        registerSchema.isValid(registerValues).then(valid => setRegisterDisabled(!valid));
+    }, [registerValues]);
 
     let loginButton;
 
@@ -143,6 +156,8 @@ export default function App()
                         values={registerValues}
                         change={inputRegisterChange}
                         errors={registerErrors}
+                        disabled={registerDisabled}
+                        submit={registerSubmit}
                     />
                 </Route>
 

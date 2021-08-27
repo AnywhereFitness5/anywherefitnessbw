@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import { StyledButton } from "./components/Button";
 import RegisterInput from "./components/RegisterInput";
@@ -8,11 +8,14 @@ import { RegisterCheckbox } from './components/RegisterCheckbox';
 
 function Register(props)
 {
-    const { values, change, errors } = props;
+    const { values, change, errors, disabled, submit } = props;
+
+    const history = useHistory();
 
     const handleRegisterNow = (event) =>
     {
-        console.log("Login button clicked");
+        event.preventDefault();
+        submit(history);
     };
 
     const handleChange = (event) =>
@@ -114,7 +117,12 @@ function Register(props)
                 </InputContainer>
 
                 <ButtonContainer>
-                    <StyledButton type="button" onClick={handleRegisterNow}>Register Now</StyledButton>
+                    <StyledButton
+                        type="button"
+                        onClick={handleRegisterNow}
+                        disabled={disabled}>
+                        Register Now
+                    </StyledButton>
                 </ButtonContainer>
 
                 <Link to="/login" style={{ textDecoration: 'none' }}>
