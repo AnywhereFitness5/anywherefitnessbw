@@ -66,19 +66,33 @@ export default function App()
 
     const validate = (name, value) =>
     {
-        yup.reach(registerSchema, name)
-            .validate(value)
-            .then(() => setRegisterErrors({ ...registerErrors, [name]: '' }))
-            .catch(err => setRegisterErrors({ ...registerErrors, [name]: err.errors[0] }));
+        if (name === "confirm_password")
+        {
+            const passwordValue = registerValues["password"];
+            const confirmValue = value;
+
+            if (passwordValue === confirmValue)
+            {
+                registerErrors["confirm_password"] = '';
+            }
+            else
+            {
+                registerErrors["confirm_password"] = 'Passwords must match';
+            }
+        }
+        else
+        {
+            yup.reach(registerSchema, name)
+                .validate(value)
+                .then(() => setRegisterErrors({ ...registerErrors, [name]: '' }))
+                .catch(err => setRegisterErrors({ ...registerErrors, [name]: err.errors[0] }));
+        }
     };
 
     const inputRegisterChange = (name, value) =>
     {
         validate(name, value);
-        setRegisterValues({
-            ...registerValues,
-            [name]: value
-        });
+        setRegisterValues({ ...registerValues, [name]: value });
     };
 
     let loginButton;

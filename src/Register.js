@@ -6,13 +6,8 @@ import RegisterInput from "./components/RegisterInput";
 import run from "./Assets/run.jpg";
 import { RegisterCheckbox } from './components/RegisterCheckbox';
 
-const options = ["Client", "Instructor"];
-
 function Register(props)
 {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null);
-
     const { values, change, errors } = props;
 
     const handleRegisterNow = (event) =>
@@ -20,22 +15,12 @@ function Register(props)
         console.log("Login button clicked");
     };
 
-    const toggling = () => setIsOpen(!isOpen);
-
-    const onOptionClicked = (value) => () =>
-    {
-        setSelectedOption(value);
-        setIsOpen(false);
-        console.log("Selected:", selectedOption);
-    };
-
-    const onChange = (event) =>
+    const handleChange = (event) =>
     {
         const { name, value, checked, type } = event.target;
-
         const valueToUse = (type === "checkbox") ? checked : value;
 
-        console.log(`Name: ${name}, Value: ${valueToUse}`);
+        // console.log(`Name: ${name}, Value: ${valueToUse}`);
         change(name, valueToUse);
     };
 
@@ -44,96 +29,87 @@ function Register(props)
             <MainContainer>
                 <RegisterText>Register</RegisterText>
 
-                <ErrorContainer>
-                    <div>{errors.first_name}</div>
-                    <div>{errors.last_name}</div>
-                    <div>{errors.email}</div>
-                    <div>{errors.user_name}</div>
-                    <div>{errors.password}</div>
-                    <div>{errors.confirm_password}</div>
-                    <div>{errors.user_type}</div>
-                    <div>{errors.terms}</div>
-                </ErrorContainer>
-
                 <InputContainer>
+                    <ErrorContainer>{errors.first_name}</ErrorContainer>
                     <RegisterInput
                         name="first_name"
                         value={values.first_name}
                         id="first-name-input"
-                        onChange={onChange}
+                        onChange={handleChange}
                         type="text"
                         placeholder="First Name"
 
                     />
 
+                    <ErrorContainer>{errors.last_name}</ErrorContainer>
                     <RegisterInput
                         name="last_name"
                         value={values.last_name}
                         id="last-name-input"
-                        onChange={onChange}
+                        onChange={handleChange}
                         type="text"
                         placeholder="Last Name"
                     />
 
+                    <ErrorContainer>{errors.email}</ErrorContainer>
                     <RegisterInput
                         name="email"
                         value={values.email}
                         id="email-input"
-                        onChange={onChange}
+                        onChange={handleChange}
                         type="email"
                         placeholder="Email"
                     />
 
+                    <ErrorContainer>{errors.user_name}</ErrorContainer>
                     <RegisterInput
                         name="user_name"
                         value={values.user_name}
                         id="user-name-input"
-                        onChange={onChange}
+                        onChange={handleChange}
                         type="text"
                         placeholder="Username"
                     />
 
+                    <ErrorContainer>{errors.password}</ErrorContainer>
                     <RegisterInput
                         name="password"
                         value={values.password}
                         id="password-input"
-                        onChange={onChange}
+                        onChange={handleChange}
                         type="password"
                         placeholder="Password"
                     />
 
+                    <ErrorContainer>{errors.confirm_password}</ErrorContainer>
                     <RegisterInput
                         name="confirm_password"
                         value={values.confirm_password}
                         id="confirm-password-input"
-                        onChange={onChange}
+                        onChange={handleChange}
                         type="password"
                         placeholder="Confirm Password"
                     />
 
-                    <DropDownContainer>
-                        <DropDownHeader onClick={toggling}>
-                            {selectedOption || "-- Select an Option --"}
-                        </DropDownHeader>
-                        {isOpen && (
-                            <DropDownListContainer>
-                                <DropDownList>
-                                    {options.map(option => (
-                                        // onClick={onOptionClicked("user_type", option)}
-                                        <ListItem onClick={onOptionClicked(option)} key={option}>
-                                            {option}
-                                        </ListItem>
-                                    ))}
-                                </DropDownList>
-                            </DropDownListContainer>
-                        )}
-                    </DropDownContainer>
+                    <ErrorContainer>{errors.user_type}</ErrorContainer>
+                    <Select
+                        id='size-dropdown'
+                        onChange={handleChange}
+                        value={values.user_type}
+                        name='user_type'
+                        type='dropdown'
+                    >
+                        <option value=''>-- Select a user type --</option>
+                        <option value='client'>Client</option>
+                        <option value='instructor'>Instructor</option>
+                    </Select>
 
+                    <ErrorContainer>{errors.terms}</ErrorContainer>
                     <RegisterCheckbox
                         name="terms"
                         checked={values.terms}
                         id="terms-input"
-                        onChange={onChange}
+                        onChange={handleChange}
                         label="Accept Terms of Service" />
                 </InputContainer>
 
@@ -159,7 +135,7 @@ const Body = styled.body`
     height: 100%;
     width: 100%;
     font-family: "Raleway", sans-serif;
-    `;
+`;
 
 const MainContainer = styled.div`
     display: flex;
@@ -175,45 +151,45 @@ const MainContainer = styled.div`
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.4rem;
-  @media only screen and (max-width: 320px) {
-    width: 80vw;
-    height: 90vh;
-    hr {
-      margin-bottom: 0.3rem;
+    @media only screen and (max-width: 320px) {
+        width: 80vw;
+        height: 90vh;
+        hr {
+            margin-bottom: 0.3rem;
+        }
+        h4 {
+            font-size: small;
+        }
     }
-    h4 {
-      font-size: small;
+    @media only screen and (min-width: 360px) {
+        width: 80vw;
+        height: 90vh;
+        h4 {
+            font-size: small;
+        }
     }
-  }
-  @media only screen and (min-width: 360px) {
-    width: 80vw;
-    height: 90vh;
-    h4 {
-      font-size: small;
+    @media only screen and (min-width: 411px) {
+        width: 80vw;
+        height: 90vh;
     }
-  }
-  @media only screen and (min-width: 411px) {
-    width: 80vw;
-    height: 90vh;
-  }
-
-  @media only screen and (min-width: 768px) {
-    width: 80vw;
-    height: 80vh;
-  }
-  @media only screen and (min-width: 1024px) {
-    width: 70vw;
-    height: 50vh;
-  }
-  @media only screen and (min-width: 1280px) {
-    width: 30vw;
-    height: 80vh;
-  }
+    @media only screen and (min-width: 768px) {
+        width: 80vw;
+        height: 80vh;
+    }
+    @media only screen and (min-width: 1024px) {
+        width: 70vw;
+        height: 50vh;
+    }
+    @media only screen and (min-width: 1280px) {
+        width: 30vw;
+        height: 80vh;
+    }
 `;
 
 const RegisterText = styled.h2`
-    margin: 3rem 0 2rem 0;
-    `;
+    margin: 2rem 0 1rem 0;
+    color: #3c354e;
+`;
 
 const InputContainer = styled.div`
     display: flex;
@@ -222,29 +198,25 @@ const InputContainer = styled.div`
     align-items: center;
     height: 80%;
     width: 100%;
-    `;
+`;
 
 const ButtonContainer = styled.div`
-    margin: 1rem 0 2rem 0;
+    margin: 2rem 0 2rem 0;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    `;
+`;
 
 const SignIn = styled.h4`
     cursor: pointer;
-    `;
+`;
 
-const DropDownContainer = styled("div")`
-    width: 82%;
-    margin: 0 auto;
-    `;
-
-const DropDownHeader = styled("div")`
+const Select = styled("select")`
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     border-radius: 2rem;
+    width: 82%;
     height: 1rem;
     padding: .5rem;
     border: none;
@@ -255,48 +227,21 @@ const DropDownHeader = styled("div")`
     &:hover{
         cursor: pointer;
     }
-    `;
-
-const DropDownListContainer = styled("div")`
     border-radius: 2rem;
-    height: 3.2rem;
+    height: 2.2rem;
     color: #3c354e;
     font-size: 1rem;
     font-weight: bold;
     z-index: 100;
-    `;
-
-const DropDownList = styled("ul")`
-    color: #3c354e;
-    font-size: 1rem;
-    font-weight: bold;
-    `;
-
-const ListItem = styled("li")`
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border-radius: 2rem;
-    height: 1rem;
-    padding: .5rem;
-    border: none;
-    outline: none;
-    color: #3c354e;
-    font-size: 1rem;
-    font-weight: bold;
-    list-style: none;
-    &:hover {
-        color: #d62828;
-        cursor: pointer;
-        }
-    `;
+`;
 
 const ErrorContainer = styled.div`
-     margin: 8px;
-     font-size: 0.5em;
+     margin: -10px;
+     font-size: 0.45em;
      color: red;
      display: block;
      margin-top: 4px;
-     font-family: "Arial";
+     font-family: tahoma, serif;
 `;
 
 export default Register;;

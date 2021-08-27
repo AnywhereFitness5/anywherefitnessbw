@@ -32,7 +32,7 @@ const registerSchema = yup.object().shape({
     confirm_password: yup
         .string()
         .trim()
-        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        .oneOf([yup.ref("password")], 'Passwords must match'),
     user_type: yup
         .string()
         .oneOf(['client', 'instructor'], 'User type is required'),
